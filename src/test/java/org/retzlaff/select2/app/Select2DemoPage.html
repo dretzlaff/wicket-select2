@@ -1,0 +1,55 @@
+<html>
+<head>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<style type="text/css">
+		select,input[type="hidden"] {width:300px}
+		form {clear:both; margin-top: 10px;}
+	</style>
+</head>
+<body>
+
+<div wicket:id="feedback"/>
+
+<span>DropDownChoice with onChange</span>
+<form wicket:id="f1">
+	<select wicket:id="e1"/>
+	<input type="submit"/>
+</form>
+
+<span>AJAX content, allowClear</span>
+<form wicket:id="f2">
+	<input type="hidden" wicket:id="e2"/>
+	<input type="submit"/>
+</form>
+
+<span>Message customization, minimum input length</span>
+<form wicket:id="f3">
+	<input type="hidden" wicket:id="e3"/>
+	<input type="submit"/>
+</form>
+
+<span>Hide search for small result sets</span>
+<form wicket:id="f4">
+	<select wicket:id="e4"/>
+	<input type="submit"/>
+</form>
+
+<span>ListMultipleChoice</span>
+<form wicket:id="f5">
+	<select multiple="multiple" wicket:id="e5"/>
+	<input type="submit"/>
+</form>
+
+<span>AJAX content, multiple-select, HTML "text"</span>
+<form wicket:id="f6">
+	<input type="hidden" wicket:id="e6"/>
+	<input type="submit"/>
+</form>
+
+<span>Tagging</span>
+<form wicket:id="f7">
+	<input type="hidden" wicket:id="e7"/>
+	<input type="submit"/>
+</form>
+</body>
+</html>
