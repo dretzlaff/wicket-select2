@@ -7,8 +7,9 @@ options derived from HTML or AJAX queries.
 
 The Maven project builds a JAR with the one behavior and two components. The test code
 includes Select2DemoApplication which is a simple Wicket application whose public
-static main() starts it in an embedded Jetty instance. The home page, Select2DemoPage,
-shows various ways you can use Select2 to decorate your components.
+static main() starts it in an embedded Jetty instance at http://localhost:8081. The
+home page, Select2DemoPage, shows various ways you can use Select2 to decorate your
+components.
 
 Existing DropDownChoice and ListMultipleChoice components in your application can be
 Select2-ified with a single line of code:
@@ -18,6 +19,10 @@ To filter and populate select options with AJAX queries, use Select2SingleChoice
 Select2MultipleChoice. Each of these requires an ISelect2AjaxAdapter instance which
 implements the query logic and id/display mapping. See StateAdapter (from the demo) and
 the Select2TagAdapter for simple examples.
+
+Please note: Select2 requires jQuery. The Select2Behavior does not import jQuery.
+You need to do this yourself. (I didn't want to impose a specific version and hosted
+location on you.)
 
 Feedback is welcome.
 
