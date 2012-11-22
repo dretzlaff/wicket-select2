@@ -1,6 +1,6 @@
 package org.retzlaff.select2;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.time.Duration;
 
 /**
@@ -9,6 +9,7 @@ import org.apache.wicket.util.time.Duration;
  * @author dan
  */
 public class Select2Settings implements IClusterable {
+	private static final long serialVersionUID = 5430777801377122502L;
 	
 	private Duration cacheDuration = Duration.NONE;
 	private int pageLimit = 10;
@@ -20,6 +21,21 @@ public class Select2Settings implements IClusterable {
 	private String noMatchesKey;
 	private String inputTooShortKey;
 	private boolean tagging;
+	private String width = "resolve";
+	
+	
+	/**
+	 * If set, defines the method used to set the width of the element.
+	 * 
+	 * <p>
+	 * Can be either of, element, copy, resolve or another value used verbatim.
+	 */
+	public String getWidth() {
+		return width;
+	}
+	public void setWidth(String width) {
+		this.width = width;
+	}
 	
 	// AJAX settings
 	
@@ -134,4 +150,5 @@ public class Select2Settings implements IClusterable {
 	public boolean isTagging() {
 		return tagging;
 	}
+	
 }

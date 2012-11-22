@@ -6,7 +6,10 @@ import org.apache.wicket.Component;
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractChoice;
 import org.apache.wicket.markup.html.form.AbstractSingleSelectChoice;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -15,8 +18,8 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
+import org.retzlaff.select2.resource.Select2CssResourceReference;
+import org.retzlaff.select2.resource.Select2JavaScriptResourceReference;
 
 /**
  * Select2 drop down decorator
@@ -28,8 +31,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * @author dan
  */
 public class Select2Behavior<T, E> extends Behavior {
-	private static final ResourceReference JS_REF = new PackageResourceReference(Select2Behavior.class, "select2.js");
-	private static final ResourceReference CSS_REF = new PackageResourceReference(Select2Behavior.class, "select2.css");
+	private static final long serialVersionUID = -8207277228470597423L;
 	
 	/**
 	 * Holds the settings
@@ -88,9 +90,14 @@ public class Select2Behavior<T, E> extends Behavior {
 		}
 		
 		return new IChoiceRenderer<E>() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
 			public String getIdValue(E object, int index) {
 				return ajaxField.getAdapter().getChoiceId(object);
 			}
+			
+			@Override
 			public Object getDisplayValue(E object) {
 				return ajaxField.getAdapter().getDisplayValue(object);
 			}
@@ -114,13 +121,17 @@ public class Select2Behavior<T, E> extends Behavior {
 	
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
-		response.renderCSSReference(CSS_REF);
-		response.renderJavaScriptReference(JS_REF);
+		response.render(CssHeaderItem.forReference(Select2CssResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(Select2JavaScriptResourceReference.get()));
 		
 		StringBuilder opts = new StringBuilder();
 		
 		if (multiple && component instanceof HiddenField) {
 			opts.append("multiple:true,");
+		}
+		
+		if (settings.getWidth() != null) {
+			opts.append("width:").append(escape(settings.getWidth())).append(',');
 		}
 		
 		if (settings.getMinimumInputLength() > 0) {
@@ -156,7 +167,7 @@ public class Select2Behavior<T, E> extends Behavior {
 			opts.append("url:'").append(ajaxField.urlFor(IResourceListener.INTERFACE, new PageParameters())).append("',");
 			opts.append("dataType:'jsonp',");
 			if (settings.getQuietMillis() > 0) {
-		        opts.append("quietMillis:").append(settings.getQuietMillis()).append(',');
+				opts.append("quietMillis:").append(settings.getQuietMillis()).append(',');
 			}
 			opts.append("data:function(q,page){return {q:q,page:page};},");
 			opts.append("results:function(data,page){return data;}");
@@ -198,7 +209,7 @@ public class Select2Behavior<T, E> extends Behavior {
 			js.append("$('#").append(component.getMarkupId()).append(" option[value=\"\"]').remove()");
 		}
 		
-		response.renderOnDomReadyJavaScript(js.toString());
+		response.render(OnDomReadyHeaderItem.forScript(js.toString()));
 	}
 	
 	@Override
