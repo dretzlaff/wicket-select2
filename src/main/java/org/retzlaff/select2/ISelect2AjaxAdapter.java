@@ -2,7 +2,7 @@ package org.retzlaff.select2;
 
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 
 /**
